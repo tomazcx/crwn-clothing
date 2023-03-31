@@ -1,43 +1,17 @@
-import {Category} from './components/category/category.component'
+import {Route, Routes} from "react-router-dom"
+import {Layout} from "./pages/layout/layout.page"
+import {Home} from './pages/home/home.page'
+import {SignIn} from "./pages/sign-in/sign-in.page"
 
 const App = () => {
 
-	const categories = [
-		{
-			"id": 1,
-			"title": "hats",
-			"imageUrl": "https://i.ibb.co/cvpntL1/hats.png"
-		},
-		{
-			"id": 2,
-			"title": "jackets",
-			"imageUrl": "https://i.ibb.co/px2tCc3/jackets.png"
-		},
-		{
-			"id": 3,
-			"title": "sneakers",
-			"imageUrl": "https://i.ibb.co/0jqHpnp/sneakers.png"
-		},
-		{
-			"id": 4,
-			"title": "womens",
-			"imageUrl": "https://i.ibb.co/GCCdy8t/womens.png"
-		},
-		{
-			"id": 5,
-			"title": "mens",
-			"imageUrl": "https://i.ibb.co/R70vBrQ/men.png"
-		}
-	]
-
-
 	return (
-		<div className="App">
-
-			<main>
-				{categories.map(({title, id, imageUrl}) => <Category key={id} title={title} image={imageUrl} />)}
-			</main>
-		</div >
+		<Routes>
+			<Route path="/" element={<Layout />}>
+				<Route index element={<Home />} />
+				<Route path="/sign-in" element={<SignIn />} />
+			</Route>
+		</Routes>
 	)
 }
 

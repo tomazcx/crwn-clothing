@@ -1,0 +1,22 @@
+header {
+	display: flex;
+	justify-content: space-between;
+	margin: 1.5rem 4rem;
+	align-items: center;
+
+	nav {
+		display: flex;
+		gap: 5rem;
+
+		a {
+			text-decoration: none;
+			color: #333333;
+			font-size: 1.5rem;
+
+			&:hover{
+				color: black;
+				transition: color .5s ease-in ;
+			}
+		}
+	}
+}
