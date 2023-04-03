@@ -1,4 +1,4 @@
-import {signInWithEmailAndPassword} from 'firebase/auth'
+import {signInWithEmailAndPassword, signOut} from 'firebase/auth'
 import {doc, getDoc, setDoc} from 'firebase/firestore'
 import {auth, db} from '../utils/firebase/firebase-app.util'
 
@@ -25,10 +25,16 @@ export const useAuth = () => {
 				createdAt: new Date
 			})
 		}
+
+		return userDocRef
+	}
+
+	const logOut = async () => {
+		return await signOut(auth)
 	}
 
 
-	return {login, register}
+	return {login, register, logOut}
 
 
 }

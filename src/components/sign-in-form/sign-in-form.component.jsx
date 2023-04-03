@@ -1,4 +1,5 @@
 import {useState} from "react"
+import {useNavigate} from "react-router-dom"
 import {useAuth} from "../../hooks/useAuth"
 import {useFirebase} from "../../hooks/useFirebase"
 import {Button} from "../button/button.component"
@@ -13,8 +14,11 @@ export const SignInForm = () => {
 	}
 
 	const [formFields, setFormFields] = useState(defaultValues)
-	const {register, login} = useAuth()
+	const {login} = useAuth()
+	const [error, setError] = useState('')
 	const {createUserWithGooglePopup} = useFirebase()
+	const navigate = useNavigate()
+
 
 	const handleChange = (event) => {
 		const {name, value} = event.target
@@ -25,16 +29,16 @@ export const SignInForm = () => {
 		event.preventDefault()
 
 		try {
-			const response = await login({email: formFields.email, password: formFields.password})
-			console.log(response)
+			await login({email: formFields.email, password: formFields.password})
+			navigate('/')
 		} catch (err) {
-			console.log(err)
+			setError('Invalid credentials.')
 		}
 	}
 
 	const logGoogleUser = async () => {
-		const response = await createUserWithGooglePopup()
-		await register(response.user)
+		await createUserWithGooglePopup()
+		navigate('/')
 	}
 
 
@@ -45,6 +49,8 @@ export const SignInForm = () => {
 			<form onSubmit={handleSubmit} className="form-sign-in">
 				<Input name="email" label="email" type="email" id="email" onChange={handleChange} value={formFields.email} required />
 				<Input name="password" label="password" type="password" id="password" onChange={handleChange} value={formFields.password} required />
+
+				{error ? <span className="error-feedback">{error}</span> : null}
 
 				<div className="buttons-div">
 					<Button type="submit" buttonType="default">sign in</Button>

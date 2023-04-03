@@ -1,4 +1,5 @@
 import {useState} from "react"
+import {useNavigate} from "react-router-dom"
 import {useAuth} from "../../hooks/useAuth"
 import {useFirebase} from "../../hooks/useFirebase"
 import {Button} from "../button/button.component"
@@ -20,6 +21,7 @@ export const SignUpForm = () => {
 	const [error, setError] = useState('')
 	const {register} = useAuth()
 	const {createUserWithCredentials} = useFirebase()
+	const navigate = useNavigate()
 
 	const handleChange = (event) => {
 		const {name, value} = event.target
@@ -43,11 +45,15 @@ export const SignUpForm = () => {
 
 		try {
 			const response = await createUserWithCredentials(userData)
-			console.log(response)
 			response.user = {...response.user, displayName: formFields.displayName}
-
 			register(response.user)
+			navigate('/')
 		} catch (err) {
+			if (err.code === 'auth/email-already-in-use') {
+				setError('Email already registered. Choose another.')
+				return
+			}
+
 			console.log(err)
 		}
 	}
@@ -61,6 +67,7 @@ export const SignUpForm = () => {
 				<Input label='Email' type="email" id="email" name="email" onChange={handleChange} value={formFields.email} required />
 				<Input label='Password' type="password" id="password" name="password" onChange={handleChange} value={formFields.password} required />
 				<Input label='Confirm Password' type="password" id="confirmPassword" name="confirmPassword" onChange={handleChange} value={formFields.confirmPassword} required />
+				{error ? <span className="error-feedback">{error}</span> : null}
 				<Button type="submit" buttonType='default' >sign up</Button>
 			</form>
 		</>

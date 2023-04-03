@@ -1,6 +1,11 @@
-.sign-in-container {
-	display: grid;
-	grid-template-columns: 50% 50%;
-	gap: 4rem;
-	margin: 2rem 15rem;
+.main-auth-container {
+	margin: 0 5rem;
+	overflow: hidden;
+	.sign-in-container {
+		display: grid;
+		grid-template-columns: 50% 50%;
+		gap: 4rem;
+		width: 100%;
+	}
 }
+

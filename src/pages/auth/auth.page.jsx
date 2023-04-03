@@ -6,12 +6,15 @@ export const Auth = () => {
 
 
 	return (
-		<main className='sign-in-container'>
-			<section>
-				<SignInForm />
-			</section>
-			<section>
-				<SignUpForm />
+		<main className='main-auth-container' >
+			<h1>Sign In</h1>
+			<section className='sign-in-container'>
+				<div>
+					<SignInForm />
+				</div>
+				<div>
+					<SignUpForm />
+				</div>
 			</section>
 		</main >
 	)

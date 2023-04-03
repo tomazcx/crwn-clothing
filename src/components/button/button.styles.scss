@@ -10,6 +10,10 @@ $blue-color-500: #357ae8;
 	cursor: pointer;
 	border: none;
 	text-transform: uppercase;
+
+	a{
+		text-decoration: none;
+	}
 }
 
 .default {
@@ -21,7 +25,16 @@ $blue-color-500: #357ae8;
 		background-color: $white-color;
 		border: 1px solid $black-color;
 		color: $black-color;
+
+		a{
+			color: $black-color;
+		}
 	}
+
+	a{
+		color: $white-color;		
+	}
+	
 }
 
 .inverted {
@@ -33,7 +46,16 @@ $blue-color-500: #357ae8;
 	&:hover{
 		background-color: $black-color;
 		color: $white-color;
+
+		a{
+			color: $white-color;
+		}
 	}
+
+	a{
+		color: $black-color;		
+	}
+
 	
 }
 

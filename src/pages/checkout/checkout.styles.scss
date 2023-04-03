@@ -1,0 +1,44 @@
+$dark-color: #505152;
+
+.checkout-container{
+	width: 55%;
+	margin: 2rem auto;
+
+	.empty-text{
+		font-size: 2.5rem;
+		text-align: center;
+		margin-top: 2rem;
+	}
+
+	.checkout-table{
+
+		overflow: hidden;
+
+		.table-head{
+			display: grid;
+			grid-template-columns: repeat(5, 1fr);
+			column-gap: 2rem;
+			align-items: center;
+			place-content: center;
+			padding-bottom: 1rem;
+			border-bottom: 1px solid $dark-color;
+			color: $dark-color;
+		}	
+
+	}
+
+	.bottom-container{
+		display: flex;
+		flex-direction: column;
+		align-items: flex-end;
+		margin-top: 2rem;
+		gap: 1rem;
+
+		.total-text{
+			font-size: 2rem;
+		}
+
+	}
+
+
+}

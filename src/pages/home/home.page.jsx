@@ -33,7 +33,7 @@ export const Home = () => {
 
 
 	return (
-		<main>
+		<main className='home-container'>
 			{categories.map(({title, id, imageUrl}) => <Category key={id} title={title} image={imageUrl} />)}
 		</main>
 	)

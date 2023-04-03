@@ -1,0 +1,35 @@
+.product-card{
+	display: flex;
+	flex-direction: column;
+	width: 100%;
+	position: relative;
+	cursor: pointer;
+
+	&:hover > button{
+		display: block;
+	}
+
+	&:hover > img {
+		filter:brightness(50%);
+	}
+
+	.card-text{
+		display: flex;
+		justify-content: space-between;
+		font-size: 24px;
+	}
+
+	img{
+		height: 500px;
+		width: 100%;
+		object-fit: cover;
+	}
+
+	button{
+		display: none;
+		position: absolute;
+		top: 80%;
+		left: 50%;
+		transform: translateX(-50%);
+	}
+}

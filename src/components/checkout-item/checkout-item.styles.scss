@@ -1,0 +1,22 @@
+.checkout-item{
+	
+	display: grid;
+	grid-template-columns: repeat(5, 1fr);
+	column-gap: 2rem;
+	border-bottom: 1px solid #2b2b2b;
+	padding: 1rem 0;
+
+	div {
+		display: flex;
+		align-items: center;
+		font-size: 1.3rem;
+
+		.x-checkout-product{
+			cursor: pointer;
+		}
+	}
+
+	img{
+		width: 200px;
+	}
+}

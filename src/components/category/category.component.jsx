@@ -2,6 +2,7 @@ import './category.styles.scss';
 
 export const Category = ({title, image}) => {
 
+
 	return (
 		<div className='category-card'>
 			<div className="background-image" style={{

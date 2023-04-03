@@ -1,0 +1,12 @@
+.quantity-checkout-product{
+	display: flex;
+	gap:.5rem;
+
+	.caret{
+		cursor: pointer;
+
+		&:hover{
+			color: #343536;
+		}
+	}
+}
