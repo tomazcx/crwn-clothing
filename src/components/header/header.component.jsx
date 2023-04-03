@@ -24,7 +24,6 @@ export const Header = () => {
 			</Link>
 			<nav>
 				<Link to="/shop">SHOP</Link>
-				<Link to="">CONTACT</Link>
 				{currentUser ? <Link onClick={signOutHandler}>SIGN OUT</Link> : <Link to="/sign-in" >SIGN IN</Link>}
 				<CartDropdown />
 			</nav>

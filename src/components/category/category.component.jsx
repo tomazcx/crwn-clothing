@@ -1,10 +1,11 @@
 import './category.styles.scss';
+import {Link} from 'react-router-dom'
 
-export const Category = ({title, image}) => {
+export const Category = ({idCategory, title, image}) => {
 
 
 	return (
-		<div className='category-card'>
+		<Link to={`/shop?category=${idCategory}`} className='category-card'>
 			<div className="background-image" style={{
 				backgroundImage: `url(${image})`,
 			}}>
@@ -13,7 +14,7 @@ export const Category = ({title, image}) => {
 					<p>Shop now</p>
 				</div>
 			</div>
-		</div>
+		</Link>
 	)
 
 }
