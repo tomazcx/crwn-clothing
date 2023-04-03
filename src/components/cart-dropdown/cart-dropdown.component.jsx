@@ -1,11 +1,11 @@
-import './cart-dropdown.styles.scss'
-import {Button} from '../button/button.component'
+import {Button, BUTTON_TYPE_CLASSES} from '../button/button.component'
 import * as Popover from '@radix-ui/react-popover';
 import {CartIcon} from '../cart-icon/cart-icon.component';
 import {useContext} from 'react';
 import {CartContext} from '../../contexts/cart.context';
 import {CartProductItem} from '../cart-product-item/cart-product-item.component';
 import {Link} from 'react-router-dom';
+import {PopoverContentContainer, PopoverTitle, PopoverTriggerContainer, PopoverCartProductsContainer} from './cart-dropdown.styles';
 
 export const CartDropdown = () => {
 
@@ -13,24 +13,27 @@ export const CartDropdown = () => {
 
 	return (
 		<Popover.Root>
-			<Popover.Trigger className='cart-dropdown-trigger'>
+			<PopoverTriggerContainer>
 				<CartIcon />
-			</Popover.Trigger>
+			</PopoverTriggerContainer>
 			<Popover.Portal>
-				<Popover.Content className='cart-dropdown'>
+				<PopoverContentContainer>
 					<Popover.Arrow height={8} width={16} />
-					<span className='cart-title'>Your cart - Total: ${cartValue}</span>
-					{cartItems.length > 0 ? cartItems.map(product => <CartProductItem key={product.id} product={product} />) : <span>Your cart is empty.</span>}
+					<PopoverTitle>Your cart - Total: ${cartValue}</PopoverTitle>
+
+					<PopoverCartProductsContainer>
+						{cartItems.length > 0 ? cartItems.map(product => <CartProductItem key={product.id} product={product} />) : <span>Your cart is empty.</span>}
+					</PopoverCartProductsContainer>
 
 					{cartItems.length > 0 ?
-						<Button type="button" buttonType="inverted">
+						<Button type="button" buttonType={BUTTON_TYPE_CLASSES.inverted}>
 							<Link to="checkout">Go to checkout</Link>
 						</Button> :
-						<Button type="button" buttonType="inverted">
+						<Button type="button" buttonType={BUTTON_TYPE_CLASSES.inverted}>
 							<Link to="/shop">Start Shopping</Link>
 						</Button>
 					}
-				</Popover.Content>
+				</PopoverContentContainer>
 			</Popover.Portal>
 		</Popover.Root>
 	)

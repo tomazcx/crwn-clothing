@@ -1,4 +1,4 @@
-import './checkout.styles.scss'
+import {CheckoutContainer, CheckoutTable, CheckoutTableHead, EmptyText, PaymentContainer, TotalText} from "./checkout.styles"
 import {useContext} from "react"
 import {CheckoutItem} from "../../components/checkout-item/checkout-item.component"
 import {CartContext} from "../../contexts/cart.context"
@@ -9,25 +9,25 @@ export const Checkout = () => {
 	const {cartItems, cartValue} = useContext(CartContext)
 
 	return (
-		<main className='checkout-container'>
-			<div className='checkout-table'>
-				<div className='table-head'>
-					<div>Image</div>
-					<div>Name</div>
-					<div>Quantity</div>
-					<div>Price</div>
-					<div>Remove</div>
-				</div>
-				{cartItems.length > 0 ? cartItems.map(product => <CheckoutItem key={product.id} product={product} />) : <p className='empty-text'>Your cart is empty.</p>}
-			</div>
+		<CheckoutContainer>
+			<CheckoutTable>
+				<CheckoutTableHead>
+					<span>Image</span>
+					<span>Name</span>
+					<span>Quantity</span>
+					<span>Price</span>
+					<span>Remove</span>
+				</CheckoutTableHead>
+				{cartItems.length > 0 ? cartItems.map(product => <CheckoutItem key={product.id} product={product} />) : <EmptyText className='empty-text'>Your cart is empty.</EmptyText>}
+			</CheckoutTable>
 			{
 				cartItems.length > 0 ?
-					<div className='bottom-container'>
-						<span className='total-text'>Total: ${cartValue} </span>
-						<Button buttonType={'default'}>Go to payment</Button>
-					</div> : null
+					<PaymentContainer>
+						<TotalText>Total: ${cartValue} </TotalText>
+						<Button type="button" >Go to payment</Button>
+					</PaymentContainer> : null
 			}
-		</main>
+		</CheckoutContainer>
 	)
 
 }

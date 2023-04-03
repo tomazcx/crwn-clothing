@@ -1,11 +1,9 @@
-import './shop.styles.scss'
+import {MainShopContainer, FilterForm, FilterContainer, LoadingIcon, ProductsContainer} from './shop.styles'
 import {useContext, useState} from 'react'
 import {ProductCard} from '../../components/product-card/product-card.component'
 import {CategoriesContext} from '../../contexts/categories.context'
-import {MagnifyingGlass} from 'phosphor-react'
 import {SelectCategory} from '../../components/select-category/select-category.component'
 import {SearchInput} from '../../components/search-input/search-input.component'
-import ReactLoading from 'react-loading';
 import {useLocation} from 'react-router-dom'
 
 const ENUM_CATEGORIES = [
@@ -29,23 +27,23 @@ export const Shop = () => {
 
 
 	return (
-		<main className="main-shop-container">
-			<div className='filter-container'>
+		<MainShopContainer>
+			<FilterContainer>
 				<h1>Shop our products</h1>
 
-				<form className='filter-form'>
+				<FilterForm>
 					<SelectCategory value={selectedCategory} onChange={(event) => setSelectedCategory(event.target.value)} name="select-category" />
 					<SearchInput placeholder="Search by name..." value={searchText} onChange={event => setText(event.target.value)} type="search" name="search-input" />
-				</form>
-			</div>
-			<section className='products-container'>
+				</FilterForm>
+			</FilterContainer>
+			<ProductsContainer>
 				{
 					categories[ENUM_CATEGORIES[selectedCategory]]
-						? filteredCategory.map(product => <ProductCard id={product.id} imageUrl={product.imageUrl} name={product.name} price={product.price} />)
-						: <ReactLoading type={'spin'} color={'#000'} height={60} width={60} className="loading-icon" />
+						? filteredCategory.map(product => <ProductCard id={product.id} imageUrl={product.imageUrl} name={product.name} price={product.price} key={product.id} />)
+						: <LoadingIcon type={'spin'} color={'#000'} height={60} width={60} className="loading-icon" />
 				}
-			</section>
-		</main>
+			</ProductsContainer>
+		</MainShopContainer>
 	)
 }
 

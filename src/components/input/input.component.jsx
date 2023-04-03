@@ -1,11 +1,11 @@
-import './input.styles.scss'
+import {FormInputLabel, FormInput, FormInputContainer} from "./input.styles"
 
 export const Input = ({label, changeHandler, ...rest}) => {
 
 	return (
-		<div className='input-div'>
-			<input {...rest} />
-			<label htmlFor={rest.name} className={rest.value.length > 0 ? "shrink" : ""}>{label}</label>
-		</div>
+		<FormInputContainer>
+			<FormInput {...rest} />
+			<FormInputLabel htmlFor={rest.name} shrink={rest.value.length > 0}>{label}</FormInputLabel>
+		</FormInputContainer>
 	)
 }

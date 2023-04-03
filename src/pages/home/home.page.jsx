@@ -1,5 +1,5 @@
 import {Category} from '../../components/category/category.component'
-import './home.styles.scss'
+import {HomeContainer} from './home.styles'
 
 export const Home = () => {
 
@@ -33,9 +33,9 @@ export const Home = () => {
 
 
 	return (
-		<main className='home-container'>
+		<HomeContainer>
 			{categories.map(({title, id, imageUrl}) => <Category key={id} idCategory={id} title={title} image={imageUrl} />)}
-		</main>
+		</HomeContainer>
 	)
 }
 

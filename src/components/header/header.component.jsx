@@ -1,10 +1,10 @@
-import './header.styles.scss'
 import CrownLogo from '../../assets/crown.svg'
 import {Link, useNavigate} from 'react-router-dom'
 import {useContext} from 'react'
 import {UserContext} from '../../contexts/user.context'
 import {useAuth} from '../../hooks/useAuth'
 import {CartDropdown} from '../cart-dropdown/cart-dropdown.component'
+import {HeaderContainer, NavContainer, NavLink} from './header.styles'
 
 export const Header = () => {
 
@@ -18,15 +18,15 @@ export const Header = () => {
 	}
 
 	return (
-		<header>
-			<Link to='/'>
+		<HeaderContainer>
+			<NavLink to='/'>
 				<img src={CrownLogo} alt="Logo da CRWN" to="/" />
-			</Link>
-			<nav>
-				<Link to="/shop">SHOP</Link>
-				{currentUser ? <Link onClick={signOutHandler}>SIGN OUT</Link> : <Link to="/sign-in" >SIGN IN</Link>}
+			</NavLink>
+			<NavContainer>
+				<NavLink to="/shop">SHOP</NavLink>
+				{currentUser ? <NavLink as='span' onClick={signOutHandler}>SIGN OUT</NavLink> : <NavLink to="/sign-in" >SIGN IN</NavLink>}
 				<CartDropdown />
-			</nav>
-		</header>
+			</NavContainer>
+		</HeaderContainer>
 	)
 }

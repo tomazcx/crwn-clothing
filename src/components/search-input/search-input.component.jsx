@@ -1,13 +1,13 @@
 import {MagnifyingGlass} from 'phosphor-react'
-import './search-input.styles.scss'
+import {InputSearchContainer, InputSearchField} from './search-input.styles'
 
 export const SearchInput = ({...rest}) => {
 
 	return (
-		<div className='input-search-div'>
+		<InputSearchContainer>
 			<MagnifyingGlass size={24} />
-			<input {...rest} />
-		</div>
+			<InputSearchField {...rest} />
+		</InputSearchContainer>
 
 	)
 }

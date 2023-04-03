@@ -4,8 +4,7 @@ import {useAuth} from "../../hooks/useAuth"
 import {useFirebase} from "../../hooks/useFirebase"
 import {Button} from "../button/button.component"
 import {Input} from "../input/input.component"
-import './sign-up-form.styles.scss'
-
+import {SignUpFormContainer, ErrorFeedback, FormTitle} from "./sign-up-form.styles"
 
 
 export const SignUpForm = () => {
@@ -60,16 +59,16 @@ export const SignUpForm = () => {
 
 	return (
 		<>
-			<h2>Don't have an account?</h2>
+			<FormTitle>Don't have an account?</FormTitle>
 			<span>Sign up with your email and password</span>
-			<form onSubmit={handleSubmit} className="sign-up-form">
+			<SignUpFormContainer onSubmit={handleSubmit} className="sign-up-form">
 				<Input label='Display Name' type="text" id="displayName" name="displayName" onChange={handleChange} value={formFields.displayName} required />
 				<Input label='Email' type="email" id="email" name="email" onChange={handleChange} value={formFields.email} required />
 				<Input label='Password' type="password" id="password" name="password" onChange={handleChange} value={formFields.password} required />
 				<Input label='Confirm Password' type="password" id="confirmPassword" name="confirmPassword" onChange={handleChange} value={formFields.confirmPassword} required />
-				{error ? <span className="error-feedback">{error}</span> : null}
-				<Button type="submit" buttonType='default' >sign up</Button>
-			</form>
+				{error ? <ErrorFeedback className="error-feedback">{error}</ErrorFeedback> : null}
+				<Button type="submit">sign up</Button>
+			</SignUpFormContainer>
 		</>
 	)
 }

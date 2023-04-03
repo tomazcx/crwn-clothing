@@ -1,15 +1,15 @@
-import './cart-product-item.styles.scss'
+import {CartProductItemText, CartProductItemContainer} from "./cart-product-item.styles"
 
 export const CartProductItem = ({product}) => {
 
 	return (
-		<div className='cart-product-item'>
+		<CartProductItemContainer>
 			<img src={product.imageUrl} alt="Product card" />
-			<div className='cart-item-text'>
+			<CartProductItemText>
 				<span>{product.name}</span>
 				<span>{product.quantity} X ${product.price}</span>
-			</div>
-		</div>
+			</CartProductItemText>
+		</CartProductItemContainer>
 	)
 
 }
