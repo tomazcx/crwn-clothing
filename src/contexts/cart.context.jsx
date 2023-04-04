@@ -1,13 +1,18 @@
-import {createContext, useEffect, useState} from "react";
+import {createContext, useEffect, useReducer, useState} from "react";
 
 export const CartContext = createContext({
 	cartItems: [],
-	addProductToCartState: () => {},
-	increaseProductQuantityFromCartState: () => {},
-	decreaseProductQuantityFromCartState: () => {},
-	removeProductFromCartState: () => {},
-	cartValue: 0
+	cartValue: 0,
+	dispatch: () => {}
 })
+
+export const CART_ACTION_TYPES = {
+	ADD_ITEM_TO_CART: 'ADD_ITEM_TO_CART',
+	INCREASE_PRODUCT_QUANTITY: 'INCREASE_PRODUCT_QUANTITY',
+	DECREASE_PRODUCT_QUANTITY: 'DECREASE_PRODUCT_QUANTITY',
+	REMOVE_PRODUCT: 'REMOVE_PRODUCT',
+	RETURN_TOTAL_VALUE: 'RETURN_TOTAL_VALUE'
+}
 
 const addItemToCart = (cartList, product) => {
 	const result = cartList.find(cartProduct => cartProduct.id === product.id)
@@ -19,7 +24,6 @@ const addItemToCart = (cartList, product) => {
 	const newCartList = cartList.map(cartProduct => cartProduct.id === product.id ? {...cartProduct, quantity: cartProduct.quantity + 1} : cartProduct)
 
 	return newCartList
-
 }
 
 const increaseProductQuantity = (idProduct, cartList) => {
@@ -38,40 +42,68 @@ const removeProduct = (idProduct, cartList) => {
 	return newCartList
 }
 
+const calculateTotalValue = (cartList) => {
+	return cartList.reduce((accumulator, product) => accumulator + product.quantity * product.price, 0)
+}
+
+const cartReducer = ({cartItems, cartValue}, action) => {
+
+	const {type, payload} = action
+
+	let newCart, newValue
+
+	switch (type) {
+		case 'ADD_ITEM_TO_CART':
+			newCart = addItemToCart(cartItems, payload)
+			return {
+				cartItems: newCart,
+				cartValue: cartValue
+			}
+		case 'INCREASE_PRODUCT_QUANTITY':
+			newCart = increaseProductQuantity(payload.id, cartItems)
+			return {
+				cartItems: newCart,
+				cartValue: cartValue
+			}
+		case 'DECREASE_PRODUCT_QUANTITY':
+			newCart = decreaseProductQuantity(payload.id, cartItems)
+			return {
+				cartItems: newCart,
+				cartValue: cartValue
+			}
+		case 'REMOVE_PRODUCT':
+			newCart = removeProduct(payload.id, cartItems)
+			return {
+				cartItems: newCart,
+				cartValue: cartValue
+			}
+		case 'RETURN_TOTAL_VALUE':
+			newValue = calculateTotalValue(cartItems)
+			return {
+				cartItems: cartItems,
+				cartValue: newValue
+			}
+		default:
+			throw new Error(`Unhandled type ${type} in userReducer`)
+	}
+
+
+
+}
+
+const INITIAL_STATE = {
+	cartItems: [],
+	cartValue: 0
+}
+
 export const CartProvider = ({children}) => {
 
-	const [cartItems, setCartItems] = useState([])
-	const [cartValue, setCartValue] = useState(0)
+	const [{cartItems, cartValue}, dispatch] = useReducer(cartReducer, INITIAL_STATE)
 
 	useEffect(() => {
-		const totalValue = cartItems.reduce((accumulator, product) => accumulator + product.quantity * product.price, 0)
-		setCartValue(totalValue)
+		dispatch({type: CART_ACTION_TYPES.RETURN_TOTAL_VALUE})
 	}, [cartItems])
 
-	const addProductToCartState = (product) => {
-		const cartList = addItemToCart(cartItems, product)
-
-		setCartItems(cartList)
-	}
-
-	const increaseProductQuantityFromCartState = (idProduct) => {
-		const cartList = increaseProductQuantity(idProduct, cartItems)
-
-		setCartItems(cartList)
-	}
-
-	const decreaseProductQuantityFromCartState = (idProduct) => {
-		const cartList = decreaseProductQuantity(idProduct, cartItems)
-
-		setCartItems(cartList)
-	}
-
-	const removeProductFromCartState = (idProduct) => {
-		const cartList = removeProduct(idProduct, cartItems)
-		setCartItems(cartList)
-	}
-
-
-	return <CartContext.Provider value={{cartItems, addProductToCartState, increaseProductQuantityFromCartState, decreaseProductQuantityFromCartState, removeProductFromCartState, cartValue}}>{children}</CartContext.Provider>
+	return <CartContext.Provider value={{cartItems, cartValue, dispatch}}>{children}</CartContext.Provider>
 
 }

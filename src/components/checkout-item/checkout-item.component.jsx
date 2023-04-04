@@ -1,11 +1,15 @@
 import {useContext} from 'react'
-import {CartContext} from '../../contexts/cart.context'
+import {CartContext, CART_ACTION_TYPES} from '../../contexts/cart.context'
 import {QuantityCheckout} from '../quantity-checkout/quantity-checkout.component'
 import {CheckoutItemContainer, RemoveProduct, CheckoutItemColumn} from './checkout-item.styles'
 
 export const CheckoutItem = ({product}) => {
 
-	const {removeProductFromCartState} = useContext(CartContext)
+	const {dispatch} = useContext(CartContext)
+
+	const removeProductFromCart = (id) => {
+		dispatch({type: CART_ACTION_TYPES.REMOVE_PRODUCT, payload: {id}})
+	}
 
 	return (
 		<CheckoutItemContainer>
@@ -16,7 +20,7 @@ export const CheckoutItem = ({product}) => {
 			</CheckoutItemColumn>
 			<CheckoutItemColumn>${product.price * product.quantity}</CheckoutItemColumn>
 			<CheckoutItemColumn>
-				<RemoveProduct onClick={() => removeProductFromCartState(product.id)} className="x-checkout-product" />
+				<RemoveProduct onClick={() => removeProductFromCart(product.id)} className="x-checkout-product" />
 			</CheckoutItemColumn>
 		</CheckoutItemContainer>
 	)
