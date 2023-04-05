@@ -5,12 +5,12 @@ import {CartIconSVG, CartIconCount, CartIconContainer} from './cart-icon.styles'
 
 export const CartIcon = () => {
 
-	const {cartItems} = useContext(CartContext)
+	const {cartCount} = useContext(CartContext)
 
 	return (
 		<CartIconContainer>
 			<CartIconSVG src={CartSVG} alt="Cart Icon" />
-			<CartIconCount>{cartItems.length}</CartIconCount>
+			<CartIconCount>{cartCount}</CartIconCount>
 		</CartIconContainer>
 	)
 }

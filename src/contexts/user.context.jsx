@@ -1,6 +1,7 @@
 import {createContext, useEffect, useState, useReducer} from "react";
 import {useAuth} from "../hooks/useAuth";
 import {useFirebase} from "../hooks/useFirebase";
+import {createAction} from "../utils/reducer/create-action.utils";
 
 export const UserContext = createContext({
 	currentUser: null,
@@ -38,7 +39,7 @@ export const UserProvider = ({children}) => {
 	const {onAuthStateChangedListener} = useFirebase()
 
 	const setCurrentUser = (user) => {
-		dispatch({type: USER_ACTION_TYPES.SET_CURRENT_USER, payload: user})
+		dispatch(createAction(USER_ACTION_TYPES.SET_CURRENT_USER, {user}))
 	}
 
 	useEffect(() => {
