@@ -1,10 +1,12 @@
 import {MainShopContainer, FilterForm, FilterContainer, LoadingIcon, ProductsContainer} from './shop.styles'
-import {useContext, useState} from 'react'
+import {useContext, useEffect, useState} from 'react'
 import {ProductCard} from '../../components/product-card/product-card.component'
-import {CategoriesContext} from '../../contexts/categories.context'
 import {SelectCategory} from '../../components/select-category/select-category.component'
 import {SearchInput} from '../../components/search-input/search-input.component'
 import {useLocation} from 'react-router-dom'
+import {useDispatch, useSelector} from 'react-redux'
+import {setCategories} from '../../store/categories/categories.action'
+import {useCategories} from '../../hooks/useCategories'
 
 const ENUM_CATEGORIES = [
 	'hats',
@@ -16,11 +18,22 @@ const ENUM_CATEGORIES = [
 
 export const Shop = () => {
 
-	const {categories} = useContext(CategoriesContext)
+	const categories = useSelector(state => state.categories.categoriesMap)
+	const dispatch = useDispatch()
 	const location = useLocation()
+	const {getCategoriesAndDocuments} = useCategories()
 	const queryParams = new URLSearchParams(location.search)
 	const [selectedCategory, setSelectedCategory] = useState(queryParams.get('category') ? queryParams.get('category') : 0)
 	const [searchText, setText] = useState('')
+
+	useEffect(() => {
+		const getCategoriesMap = async () => {
+			const categoriesMap = await getCategoriesAndDocuments()
+			dispatch(setCategories(categoriesMap))
+		}
+		getCategoriesMap()
+	}, [dispatch])
+
 
 	const filteredCategory = categories[ENUM_CATEGORIES[selectedCategory]] ? categories[ENUM_CATEGORIES[selectedCategory]].filter(product => product.name.toLowerCase().includes(searchText.toLowerCase())) : []
 

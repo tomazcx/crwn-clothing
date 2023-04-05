@@ -4,8 +4,34 @@ import {Home} from './pages/home/home.page'
 import {Auth} from "./pages/auth/auth.page"
 import {Shop} from "./pages/shop/shop.page"
 import {Checkout} from "./pages/checkout/checkout.page"
+import {useEffect} from "react"
+import {useAuth} from "./hooks/useAuth"
+import {useFirebase} from "./hooks/useFirebase"
+import {setCurrentUser} from "./store/user/user.action"
+import {useDispatch} from "react-redux"
+
 
 const App = () => {
+
+	const {register} = useAuth()
+	const {onAuthStateChangedListener} = useFirebase()
+	const dispatch = useDispatch()
+
+
+	useEffect(() => {
+		const unsubscribe = onAuthStateChangedListener((user) => {
+			if (user) {
+				register(user) //will only return the doc refference in case already registered
+			}
+
+			dispatch(setCurrentUser(user))
+		})
+
+		return unsubscribe
+	}, [dispatch])
+
+
+
 
 	return (
 		<Routes>

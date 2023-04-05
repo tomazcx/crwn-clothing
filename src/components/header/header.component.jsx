@@ -1,14 +1,13 @@
 import CrownLogo from '../../assets/crown.svg'
-import {Link, useNavigate} from 'react-router-dom'
-import {useContext} from 'react'
-import {UserContext} from '../../contexts/user.context'
+import {useNavigate} from 'react-router-dom'
 import {useAuth} from '../../hooks/useAuth'
 import {CartDropdown} from '../cart-dropdown/cart-dropdown.component'
 import {HeaderContainer, NavContainer, NavLink} from './header.styles'
+import {useSelector} from 'react-redux'
 
 export const Header = () => {
 
-	const {currentUser} = useContext(UserContext)
+	const currentUser = useSelector(state => state.user.currentUser)
 	const {logOut} = useAuth()
 	const navigate = useNavigate()
 
