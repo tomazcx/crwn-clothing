@@ -7,8 +7,8 @@ import {Checkout} from "./pages/checkout/checkout.page"
 import {useEffect} from "react"
 import {useAuth} from "./hooks/useAuth"
 import {useFirebase} from "./hooks/useFirebase"
-import {setCurrentUser} from "./store/user/user.action"
 import {useDispatch} from "react-redux"
+import {setCurrentUser} from "./store/user/user.reducer"
 
 
 const App = () => {
@@ -16,7 +16,6 @@ const App = () => {
 	const {register} = useAuth()
 	const {onAuthStateChangedListener} = useFirebase()
 	const dispatch = useDispatch()
-
 
 	useEffect(() => {
 		const unsubscribe = onAuthStateChangedListener((user) => {

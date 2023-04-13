@@ -10,6 +10,7 @@
 	},
 	"dependencies": {
 		"@radix-ui/react-popover": "^1.0.5",
+		"@reduxjs/toolkit": "^1.9.3",
 		"firebase": "^9.19.0",
 		"phosphor-react": "^1.4.1",
 		"react": "^18.2.0",
@@ -19,6 +20,10 @@
 		"react-router-dom": "^6.10.0",
 		"redux": "^4.2.1",
 		"redux-logger": "^3.0.6",
+		"redux-persist": "^6.0.0",
+		"redux-saga": "^1.2.3",
+		"redux-thunk": "^2.4.2",
+		"reselect": "^4.1.7",
 		"sass": "^1.60.0",
 		"styled-components": "^5.3.9"
 	},

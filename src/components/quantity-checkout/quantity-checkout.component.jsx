@@ -1,18 +1,17 @@
 import {CaretLeft, CaretRight} from "phosphor-react"
-import {useContext} from 'react'
-import {CartContext} from '../../contexts/cart.context'
+import {useDispatch} from "react-redux"
 import {QuantityCheckoutProductContainer, CaretIcon} from './quantity-checkout.styles'
+import {addProductToCart, removeProductFromCart} from "../../store/cart/cart.reducer"
 
-export const QuantityCheckout = ({productId, quantity}) => {
+export const QuantityCheckout = ({product}) => {
 
-	const {increaseProductQuantity, decreaseProductQuantity} = useContext(CartContext)
-
+	const dispatch = useDispatch()
 
 	return (
 		<QuantityCheckoutProductContainer>
-			<CaretIcon as={CaretLeft} size={20} onClick={() => decreaseProductQuantity(productId)} />
-			{quantity}
-			<CaretIcon as={CaretRight} size={20} onClick={() => increaseProductQuantity(productId)} />
+			<CaretIcon as={CaretLeft} size={20} onClick={() => dispatch(removeProductFromCart(product))} />
+			{product.quantity}
+			<CaretIcon as={CaretRight} size={20} onClick={() => dispatch(addProductToCart(product))} />
 		</QuantityCheckoutProductContainer>
 
 	)

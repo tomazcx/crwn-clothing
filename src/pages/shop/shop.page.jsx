@@ -1,12 +1,13 @@
 import {MainShopContainer, FilterForm, FilterContainer, LoadingIcon, ProductsContainer} from './shop.styles'
-import {useContext, useEffect, useState} from 'react'
+import {useEffect, useState} from 'react'
 import {ProductCard} from '../../components/product-card/product-card.component'
 import {SelectCategory} from '../../components/select-category/select-category.component'
 import {SearchInput} from '../../components/search-input/search-input.component'
 import {useLocation} from 'react-router-dom'
 import {useDispatch, useSelector} from 'react-redux'
-import {setCategories} from '../../store/categories/categories.action'
-import {useCategories} from '../../hooks/useCategories'
+import {selectCategoriesIsLoading, selectCategoriesMap} from '../../store/categories/categories.selector'
+import {fetchCategoriesAsync} from '../../store/categories/categories.thunk'
+
 
 const ENUM_CATEGORIES = [
 	'hats',
@@ -18,20 +19,16 @@ const ENUM_CATEGORIES = [
 
 export const Shop = () => {
 
-	const categories = useSelector(state => state.categories.categoriesMap)
+	const categories = useSelector(state => selectCategoriesMap(state))
+	const isLoading = useSelector(state => selectCategoriesIsLoading(state))
 	const dispatch = useDispatch()
 	const location = useLocation()
-	const {getCategoriesAndDocuments} = useCategories()
 	const queryParams = new URLSearchParams(location.search)
 	const [selectedCategory, setSelectedCategory] = useState(queryParams.get('category') ? queryParams.get('category') : 0)
 	const [searchText, setText] = useState('')
 
 	useEffect(() => {
-		const getCategoriesMap = async () => {
-			const categoriesMap = await getCategoriesAndDocuments()
-			dispatch(setCategories(categoriesMap))
-		}
-		getCategoriesMap()
+		dispatch(fetchCategoriesAsync())
 	}, [dispatch])
 
 
@@ -51,7 +48,7 @@ export const Shop = () => {
 			</FilterContainer>
 			<ProductsContainer>
 				{
-					categories[ENUM_CATEGORIES[selectedCategory]]
+					isLoading === false
 						? filteredCategory.map(product => <ProductCard id={product.id} imageUrl={product.imageUrl} name={product.name} price={product.price} key={product.id} />)
 						: <LoadingIcon type={'spin'} color={'#000'} height={60} width={60} className="loading-icon" />
 				}

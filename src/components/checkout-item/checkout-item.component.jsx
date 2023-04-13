@@ -1,22 +1,24 @@
-import {useContext} from 'react'
-import {CartContext} from '../../contexts/cart.context'
+import {useDispatch, useSelector} from 'react-redux'
 import {QuantityCheckout} from '../quantity-checkout/quantity-checkout.component'
 import {CheckoutItemContainer, RemoveProduct, CheckoutItemColumn} from './checkout-item.styles'
+import {selectCartItems} from '../../store/cart/cart.selector'
+import {clearProductFromCart} from '../../store/cart/cart.reducer'
 
 export const CheckoutItem = ({product}) => {
 
-	const {removeItemFromCart} = useContext(CartContext)
+	const cartItems = useSelector(state => selectCartItems(state))
+	const dispatch = useDispatch()
 
 	return (
 		<CheckoutItemContainer>
 			<CheckoutItemColumn><img src={product.imageUrl} alt="Product image" /></CheckoutItemColumn>
 			<CheckoutItemColumn>{product.name}</CheckoutItemColumn>
 			<CheckoutItemColumn>
-				<QuantityCheckout productId={product.id} quantity={product.quantity} />
+				<QuantityCheckout product={product} />
 			</CheckoutItemColumn>
 			<CheckoutItemColumn>${product.price * product.quantity}</CheckoutItemColumn>
 			<CheckoutItemColumn>
-				<RemoveProduct onClick={() => removeItemFromCart(product.id)} className="x-checkout-product" />
+				<RemoveProduct onClick={() => dispatch(clearProductFromCart(product))} className="x-checkout-product" />
 			</CheckoutItemColumn>
 		</CheckoutItemContainer>
 	)

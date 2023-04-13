@@ -1,15 +1,16 @@
 import {Button, BUTTON_TYPE_CLASSES} from '../button/button.component'
 import * as Popover from '@radix-ui/react-popover';
 import {CartIcon} from '../cart-icon/cart-icon.component';
-import {useContext} from 'react';
-import {CartContext} from '../../contexts/cart.context';
 import {CartProductItem} from '../cart-product-item/cart-product-item.component';
 import {Link} from 'react-router-dom';
 import {PopoverContentContainer, PopoverTitle, PopoverTriggerContainer, PopoverCartProductsContainer} from './cart-dropdown.styles';
+import {useSelector} from 'react-redux';
+import {selectCartItems, selectCartValue} from '../../store/cart/cart.selector';
 
 export const CartDropdown = () => {
 
-	const {cartItems, cartValue} = useContext(CartContext)
+	const cartItems = useSelector(state => selectCartItems(state))
+	const cartValue = useSelector(state => selectCartValue(state))
 
 	return (
 		<Popover.Root>
