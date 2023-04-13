@@ -7,7 +7,7 @@
 	],
 	"functions": {
 		"api/hello.js": {
-			"runtime": "vercel-node@latest"
+			"runtime": "nodejs18.x"
 		}
 	}
 }
