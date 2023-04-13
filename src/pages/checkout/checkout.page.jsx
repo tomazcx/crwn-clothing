@@ -3,6 +3,7 @@ import {CheckoutItem} from "../../components/checkout-item/checkout-item.compone
 import {Button} from '../../components/button/button.component'
 import {useSelector} from "react-redux"
 import {selectCartItems, selectCartValue} from "../../store/cart/cart.selector"
+import {PaymentForm} from "../../components/payment-form/payment-form.component"
 
 export const Checkout = () => {
 
@@ -28,6 +29,7 @@ export const Checkout = () => {
 						<Button type="button" >Go to payment</Button>
 					</PaymentContainer> : null
 			}
+			<PaymentForm />
 		</CheckoutContainer>
 	)
 
